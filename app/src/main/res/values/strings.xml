@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">RR_MVP</string>
-    <string name="hello_world">Hello World</string>
+    <string name="hello_world">\n\nHello World</string>
     <string name="advance_search">Advance Search</string>
     <string name="find_restaurant">Find Restaurant</string>
+    <string name="website_search">Search For Its Website</string>
 </resources>

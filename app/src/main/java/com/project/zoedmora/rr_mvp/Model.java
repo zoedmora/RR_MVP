@@ -8,7 +8,7 @@ import com.yelp.clientlib.entities.Business;
 
 public class Model implements ProvidedModelOps{
     //variables
-    private Business chosenBusiness;
+    private Restaurant chosenBusiness;
 
     //presenter reference
     private RequiredPresenterOps presenter;
@@ -17,25 +17,36 @@ public class Model implements ProvidedModelOps{
     //Constructor
     public Model(RequiredPresenterOps presenterConnect) {
         this.presenter = presenterConnect;       //Connects the model and presentor together, presenterConnect passes old presenter to model
+        chosenBusiness = new Restaurant();
     }
 
 
 
 
     @Override
-    public void saveSearchResults(Business b) {
-        chosenBusiness = b;
+    public void saveSearchResults(Restaurant r) {
+        //chosenBusiness = b;
         //setTextInView("Lets See");
+        chosenBusiness = new Restaurant(r.getName(),r.getAddress(), r.getPhoneNumber(), r.getRating());
 
     }
 
     @Override
-    public String getAdress(){
-        String address = chosenBusiness.location().address().get(0) + ", ";
-                  address += chosenBusiness.location().city() + ", ";
-                  address += chosenBusiness.location().stateCode();
+    public String getAddress(){
+        String address = chosenBusiness.getAddress();
+        //String address = chosenBusiness.location().address().get(0) + ", ";
+         //         address += chosenBusiness.location().city() + ", ";
+         //         address += chosenBusiness.location().stateCode();
         //presenter.giveAddressToView(address);
         return address;
+    }
+
+    public Restaurant getSearchedRestaurant(){
+        return chosenBusiness.searchForRestaurant();
+    }
+
+    public String getRestaurantsWebStatement(){
+        return chosenBusiness.getSearchStatement();
     }
 
 }

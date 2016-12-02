@@ -8,5 +8,6 @@ public interface ProvidedPresenterOps {
 
     void search();
     void openMap();
+    void restaurantWebSearch();
 
 }

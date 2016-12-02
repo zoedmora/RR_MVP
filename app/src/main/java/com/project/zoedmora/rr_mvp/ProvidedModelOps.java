@@ -8,7 +8,11 @@ import com.yelp.clientlib.entities.Business;
 
 public interface ProvidedModelOps {
 
-    void saveSearchResults(Business businesses);
+    void saveSearchResults(Restaurant businesses);
 
-    String getAdress();
+    String getAddress();
+
+    Restaurant getSearchedRestaurant();
+
+    String getRestaurantsWebStatement();
 }

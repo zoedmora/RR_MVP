@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +22,12 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, RequiredViewOps {
 
     private ImageView restaurantPic;
+    private TextView restaurantTitle;
     private TextView restaurantInfo;// = (TextView) findViewById(R.id.textbox);
+    private TextView webSearch;
     private Button searchButton;
+
+
 
     private ProvidedPresenterOps presenter;
 
@@ -32,7 +37,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        restaurantTitle = (TextView) findViewById(R.id.title);
         restaurantInfo = (TextView) findViewById(R.id.myTextView);
+
+        webSearch = (TextView) findViewById(R.id.webSearch);
+        webSearch.setOnClickListener(this);
 
         searchButton = (Button) findViewById(R.id.findButton);
         searchButton.setOnClickListener(this);
@@ -58,34 +67,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.photo:{
                 presenter.openMap();
             }
+            case R.id.webSearch:{
+                presenter.restaurantWebSearch();
+            }
 
         }
     }
 
     @Override
-    public void showSearchResults(Business business, String msg) {
+    public void showSearchResults(Restaurant restaurant, String msg) {
         //Putting text information onto Screen
-        if (business != null) {
+        if (restaurant != null) {
+
+            //This is to avoid Error from Output Streams
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
             //Changing Info
-            restaurantInfo.setText(business.name() + " " + business.rating());
-
-            //Changing Picture
-            try {//We should do this in a different thread but to avoid it we can do the following strict thing
-
-                //This is to avoid Error from Output Streams
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-
-
-                URL yelpPicture = new URL(business.imageUrl());
-                Bitmap urlStream = BitmapFactory.decodeStream(yelpPicture.openConnection().getInputStream());
-                restaurantPic.setImageBitmap(urlStream);
-            }
-            catch (Exception e) {
-
-                restaurantInfo.setText(e.toString());
-                e.printStackTrace();
-            }
+            restaurantTitle.setText(restaurant.getName());
+            restaurantInfo.setText(restaurant.printRestaurantInfo());
+            restaurantPic.setImageBitmap(restaurant.getPic());
+            webSearch.setText(R.string.website_search);    //"Search for Website");
 
         } else {
             restaurantInfo.setText(msg);
@@ -100,9 +102,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void showMap(String address){
         //This is so that the google app opens up
+        if (address == null){address = "407 E Poppy St, Long Beach, CA";}//else{address = "long beach, CA";}
+
         String uri = String.format(Locale.ENGLISH, "geo:0,0?q=" + address );
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(intent);
+    }
+
+    public void showWebSearch(String statement){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/#q=" + statement));
+        startActivity(browserIntent);
     }
 
 }

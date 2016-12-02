@@ -8,9 +8,11 @@ import com.yelp.clientlib.entities.Business;
 
 public interface RequiredViewOps {
 
-    void showSearchResults(Business business, String errorMessage);
+    void showSearchResults(Restaurant business, String errorMessage);
 
     void editText(String t);
 
     void showMap(String address);
+
+    void showWebSearch(String webStatement);
 }
