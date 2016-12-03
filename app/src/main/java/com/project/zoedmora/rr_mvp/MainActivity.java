@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +25,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView restaurantPic;
     private TextView restaurantTitle;
     private TextView restaurantInfo;// = (TextView) findViewById(R.id.textbox);
-    private TextView webSearch;
+    private Button webSearch;
+    private TextView style;
+    private TextView distance;
     private Button searchButton;
+    private Button advanceButton;
 
 
 
@@ -40,15 +44,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         restaurantTitle = (TextView) findViewById(R.id.title);
         restaurantInfo = (TextView) findViewById(R.id.myTextView);
 
-        webSearch = (TextView) findViewById(R.id.webSearch);
+        distance = (TextView) findViewById(R.id.inputForDistance);
+        //distance.setText(" ");
+
+        style = (TextView) findViewById(R.id.inputForStyle);
+        //style.setText(" ");
+
+        webSearch = (Button) findViewById(R.id.webSearch);
         webSearch.setOnClickListener(this);
 
         searchButton = (Button) findViewById(R.id.findButton);
         searchButton.setOnClickListener(this);
 
+        advanceButton = (Button) findViewById(R.id.advanceButton);
+        advanceButton.setOnClickListener(this);
+
         restaurantPic = (ImageView) findViewById(R.id.photo);
         restaurantPic.setOnClickListener(this);
-
 
         Presenter presenterConnection = new Presenter(this);  //Connects View and Presenter, presentor gives shares this view
         Model model = new Model(presenterConnection);          //Connects Presenter and Model,
@@ -62,14 +74,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.findButton:{
-                presenter.search();
+                beginSearch();//presenter.search();
             }   break;
             case R.id.photo:{
                 presenter.openMap();
-            }
+            }   break;
+            case R.id.advanceButton:{
+                showAdvanceInputs();
+            }   break;
             case R.id.webSearch:{
                 presenter.restaurantWebSearch();
             }
+
 
         }
     }
@@ -87,7 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             restaurantTitle.setText(restaurant.getName());
             restaurantInfo.setText(restaurant.printRestaurantInfo());
             restaurantPic.setImageBitmap(restaurant.getPic());
-            webSearch.setText(R.string.website_search);    //"Search for Website");
+            webSearch.setVisibility(View.VISIBLE);
+            //webSearch.setText(R.string.website_search);    //"Search for Website");
 
         } else {
             restaurantInfo.setText(msg);
@@ -114,4 +131,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(browserIntent);
     }
 
+    public void showAdvanceInputs(){
+        distance.setVisibility(View.VISIBLE);
+        style.setVisibility(View.VISIBLE);
+    }
+
+    public void beginSearch(){
+        /*
+        if (distance.getText().toString().equals("")){
+
+            restaurantTitle.setText("Its an empty String");
+        }
+        else {
+            //distance.getText().toString();
+            restaurantTitle.setText(distance.getText() + "Neither");
+        }
+*/
+        presenter.search(style.getText().toString(), distance.getText().toString());
+    }
 }

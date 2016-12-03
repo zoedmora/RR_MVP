@@ -12,7 +12,7 @@ public interface ProvidedModelOps {
 
     String getAddress();
 
-    Restaurant getSearchedRestaurant();
+    Restaurant getSearchedRestaurant(String style, String distance);
 
     String getRestaurantsWebStatement();
 }

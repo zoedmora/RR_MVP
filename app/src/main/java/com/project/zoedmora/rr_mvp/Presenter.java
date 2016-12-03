@@ -58,7 +58,7 @@ public class Presenter implements ProvidedPresenterOps, RequiredPresenterOps{
 
 
     @Override
-    public void search() {
+    public void search(final String s, final String d) {
 
         try{
              new AsyncTask<Void, String, Restaurant>() {
@@ -66,7 +66,7 @@ public class Presenter implements ProvidedPresenterOps, RequiredPresenterOps{
                  @Override
                  protected Restaurant doInBackground(Void... param) {
                      //return restaurant.searchForRestaurant();
-                     return model.getSearchedRestaurant();
+                     return model.getSearchedRestaurant(s, d);
                  }
 
                  @Override

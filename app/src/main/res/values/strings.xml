@@ -3,5 +3,6 @@
     <string name="hello_world">\n\nHello World</string>
     <string name="advance_search">Advance Search</string>
     <string name="find_restaurant">Find Restaurant</string>
-    <string name="website_search">Search For Its Website</string>
+    <string name="website_search">Search Website</string>
+    <string name="empty_space"> </string>
 </resources>

@@ -41,8 +41,8 @@ public class Model implements ProvidedModelOps{
         return address;
     }
 
-    public Restaurant getSearchedRestaurant(){
-        return chosenBusiness.searchForRestaurant();
+    public Restaurant getSearchedRestaurant(String style, String distance){
+        return chosenBusiness.searchForRestaurant(style, distance);
     }
 
     public String getRestaurantsWebStatement(){

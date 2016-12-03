@@ -28,6 +28,7 @@
 
     <EditText
         android:hint="Style"
+        android:text = "@string/empty_space"
         android:textSize="15sp"
         android:textAlignment="center"
         android:layout_width="100dp"
@@ -40,6 +41,7 @@
 
     <EditText
         android:hint="Distance"
+        android:text="@string/empty_space"
         android:textSize="15sp"
         android:textAlignment="center"
         android:layout_width="100dp"
@@ -101,7 +103,7 @@
 
         style="@style/Base.Theme.AppCompat.Light.DarkActionBar" />
 
-    <TextView
+    <Button
         android:id="@+id/webSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,6 +116,10 @@
         android:clickable="true"
         android:textColor="@android:color/white"
         android:textSize="18sp"
+        android:background="@drawable/my_button"
+        android:text="@string/website_search"
+        android:visibility="invisible"
+        style="@android:style/Widget.Button.Toggle"
         />
 
 

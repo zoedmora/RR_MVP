@@ -42,7 +42,7 @@ public class Restaurant {
     String error;
 
     Restaurant(){
-        stylePrefered = "restaurant"; distancePrefered = "2000";  name = "";  address = "";
+        stylePrefered = "food restaurant"; distancePrefered = "2000";  name = "";  address = "";
     }
 
     Restaurant(String name, String address, String phoneNumber, double rating){
@@ -73,7 +73,7 @@ public class Restaurant {
         address = a;
     }
 
-    public Restaurant searchForRestaurant(){
+    public Restaurant searchForRestaurant(String style, String distance){
 
         //This is to avoid Error from Output Streams
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -87,19 +87,26 @@ public class Restaurant {
         String tokenSecret = "aUMm51QO2J1g5ohk5FeQc0nB7Hc";
         ArrayList<Business> business = null;                    //List of all businesses returned from search
         Random random = new Random();                           //used to create a random number
-        int rNumber = (Math.abs(random.nextInt()) % 20);        //the random number used to pick from the list of businesses
+        int rNumber = (Math.abs(random.nextInt()) % 30);        //the random number used to pick from the list of businesses
         Business resultRestaurant;
 
         //Signing in to Yelp API
         YelpAPIFactory apiFactory = new YelpAPIFactory(consumerKey, consumerSecret, token, tokenSecret);
         YelpAPI yelpAPI = apiFactory.createAPI();
 
+        //Check if advance parameters where inserted
+        if(!style.equals("")){
+            stylePrefered = style + " restaurant";
+        }
+        if(!distance.equals("")){
+            distancePrefered = distance;
+        }
 
         //Parameters for Yelp Search
         Map<String, String> paramss = new HashMap<>();
         paramss.put("term", stylePrefered);                 //paramss.put("term", " restaurants");
         paramss.put("radius_filter", distancePrefered);     //radius_filter", "2000");
-        paramss.put("limit", "20");
+        paramss.put("limit", "30");
 
 
         //Coordinates for Yelp Search

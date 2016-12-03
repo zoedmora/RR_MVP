@@ -6,7 +6,7 @@ package com.project.zoedmora.rr_mvp;
 
 public interface ProvidedPresenterOps {
 
-    void search();
+    void search(String s, String d);
     void openMap();
     void restaurantWebSearch();
 
